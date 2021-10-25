@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:VolanteerApp/custom/BorderIcon.dart';
 import 'package:VolanteerApp/custom/OptionButton.dart';
@@ -6,6 +8,8 @@ import 'package:VolanteerApp/screens/DetailPage.dart';
 import 'package:VolanteerApp/screens/LandingPage.dart';
 import 'package:VolanteerApp/utils/constants.dart';
 import 'package:VolanteerApp/utils/widget_functions.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddPage extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -92,7 +96,7 @@ class AddPage extends StatelessWidget {
   }
 }
 
-class AddItem extends StatelessWidget {
+class AddItem extends StatefulWidget {
   final dynamic itemData;
 
   static TextEditingController titleController = new TextEditingController();
@@ -103,8 +107,22 @@ class AddItem extends StatelessWidget {
   
 
   AddItem({Key key, this.itemData}) : super(key: key);
+  File image;
 
-  
+  Future pickImage() async {
+    
+  try{
+   final image =  await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image == null) return;
+
+   
+    final imageTemporary = File(image.path);
+    this.image = imageTemporary;
+  } on PlatformException catch (e) {
+    print('Failed to pick image: $e');
+  }
+    
+  }
   
 
   @override
@@ -132,11 +150,14 @@ class AddItem extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(25.0),
-                  child: BorderIcon(
+                  child:
+                image != null ? Image.file(image, width: 400, height: 400, fit: BoxFit.cover,) : 
+                   BorderIcon(
                     height: 200,
                     width: 400,
-                    child: Icon(Icons.add,
-                        size: 100, color: Color.fromARGB(240, 220, 220, 220)),
+                    child: IconButton(icon: Icon(Icons.add), iconSize: 100, color: Color.fromARGB(240, 220, 220, 220), onPressed: () => pickImage(),)
+                    // Icon(Icons.add,
+                    //     size: 100, color: Color.fromARGB(240, 220, 220, 220)),
                   ),
                  
                 ),
@@ -221,5 +242,11 @@ class AddItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
   }
 }
