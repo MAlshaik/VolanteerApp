@@ -117,7 +117,8 @@ class AddItem extends StatefulWidget {
 
    
     final imageTemporary = File(image.path);
-    this.image = imageTemporary;
+    setState(() => this.image = imageTemporary);
+    
   } on PlatformException catch (e) {
     print('Failed to pick image: $e');
   }
