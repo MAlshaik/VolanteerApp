@@ -49,10 +49,13 @@ class LandingPage extends StatelessWidget {
                         height: 50,
                         width: 50,
                         
-                        child: Icon(
-                          Icons.menu,
-                          color: COLOR_BLACK,
-                          
+                        child: IconButton(
+                          icon: Icon(Icons.perm_identity, color: COLOR_BLACK,), padding: EdgeInsets.zero, 
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: 
+                            (context) => AddPage()
+                            ));
+                          },
                         ),
                       ),
                       
@@ -80,7 +83,9 @@ class LandingPage extends StatelessWidget {
                   padding: sidePadding,
                   child: Text(
                     "Volanteer Projects ",
-                    style: themeData.textTheme.headline1,
+                    style: TextStyle(
+        color: COLOR_WHITE, fontWeight: FontWeight.w700, fontSize: 26),
+                    
                   ),
                 ),
                 Padding(

@@ -11,7 +11,36 @@ import 'package:VolanteerApp/utils/widget_functions.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddPage extends StatelessWidget {
+class AddPage extends StatefulWidget{
+      @override 
+    AddPageState createState() => AddPageState();
+ }
+
+class AddPageState <T extends AddPage> extends State<T>{
+  static TextEditingController titleController = new TextEditingController();
+  static TextEditingController descriptionController = new TextEditingController();
+
+  String description = '';
+  String title = '';
+
+  File image;
+
+  Future pickImage() async {
+    
+  try{
+   final image =  await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image == null) return;
+
+   
+    final imageTemporary = File(image.path);
+    setState(() => this.image = imageTemporary);
+    
+  } on PlatformException catch (e) {
+    print('Failed to pick image: $e');
+  }
+    
+  }
+  
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final ThemeData themeData = Theme.of(context);
@@ -74,71 +103,10 @@ class AddPage extends StatelessWidget {
                 Expanded(
                   child: Padding(
                     padding: sidePadding,
-                    child: ListView.builder(
+                    child: ListView(
                         physics: BouncingScrollPhysics(),
-                        itemCount: 1,
-                        itemBuilder: (context, index) {
-                          return AddItem(
-                            itemData: RE_DATA[index],
-                          );
-                        }),
-                  ),
-                ),
-
-                addVerticalSpace(10),
-                
-              ],
-            ),
-          ],
-        ),
-      )),
-    );
-  }
-}
-
-class AddItem extends StatefulWidget {
-  final dynamic itemData;
-
-  static TextEditingController titleController = new TextEditingController();
-  static TextEditingController descriptionController = new TextEditingController();
-
-  String description = '';
-  String title = '';
-  
-
-  AddItem({Key key, this.itemData}) : super(key: key);
-  File image;
-
-  Future pickImage() async {
-    
-  try{
-   final image =  await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (image == null) return;
-
-   
-    final imageTemporary = File(image.path);
-    // setState(() => this.image = imageTemporary);
-    
-  } on PlatformException catch (e) {
-    print('Failed to pick image: $e');
-  }
-    
-  }
-  
-
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
-    //this is to sense if I clicked the add image button or not (needs to be changed to be able to actually add an image)
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => DetailPage(
-                  itemData: itemData,
-                )));
-      },
-    child:
-      Container(
+                        children: [
+                          Container(
         margin: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,13 +120,12 @@ class AddItem extends StatefulWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(25.0),
                   child:
-                image != null ? Image.file(image, width: 400, height: 400, fit: BoxFit.cover,) : 
-                   BorderIcon(
+                  image != null ? Image.file(image, width: 400, height: 200, fit: BoxFit.cover,) : 
+                  BorderIcon(
                     height: 200,
                     width: 400,
-                    child: IconButton(icon: Icon(Icons.add), iconSize: 100, color: Color.fromARGB(240, 220, 220, 220), onPressed: () => pickImage(),)
-                    // Icon(Icons.add,
-                    //     size: 100, color: Color.fromARGB(240, 220, 220, 220)),
+                    child: IconButton(icon: Icon(Icons.add), iconSize: 100, color: Color.fromARGB(240, 220, 220, 220), onPressed: () => pickImage(),
+                  ),
                   ),
                  
                 ),
@@ -242,12 +209,67 @@ class AddItem extends StatefulWidget {
           ],
         ),
       ),
+                        ],
+                        ),
+                  ),
+                ),
+
+                addVerticalSpace(10),
+                
+              ],
+            ),
+          ],
+        ),
+      )),
     );
   }
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
-  }
 }
+// class AddItem extends StatefulWidget{
+//   @override 
+//   AddItemState createState() => AddItemState();
+// }
+
+// class AddItemState<T extends AddItem> extends State<T>{
+
+  
+//   // final dynamic itemData;
+
+//   // static TextEditingController titleController = new TextEditingController();
+//   // static TextEditingController descriptionController = new TextEditingController();
+
+//   // String description = '';
+//   // String title = '';
+  
+
+//   // AddItemState({Key key, this.itemData}) : super(key: key);
+//   File image;
+
+//   Future pickImage() async {
+    
+//   try{
+//    final image =  await ImagePicker().pickImage(source: ImageSource.gallery);
+//     if (image == null) return;
+
+   
+//     final imageTemporary = File(image.path);
+//     setState(() => this.image = imageTemporary);
+    
+//   } on PlatformException catch (e) {
+//     print('Failed to pick image: $e');
+//   }
+    
+//   }
+  
+
+//   @override
+//   Widget build(BuildContext context) {
+//     SizedBox(child,)
+    
+//   }
+
+//   @override
+//   State<StatefulWidget> createState() {
+//     // TODO: implement createState
+//     throw UnimplementedError();
+//   }
+// }

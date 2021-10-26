@@ -7,7 +7,7 @@ class BorderIcon extends StatelessWidget {
   final double width, height;
 
   const BorderIcon(
-      {Key key,
+      { Key key,
       @required this.child,
       this.padding,
       this.width,
