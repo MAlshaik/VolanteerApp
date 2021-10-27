@@ -1,3 +1,5 @@
+import 'package:VolanteerApp/screens/ProfilePage.dart';
+import 'package:VolanteerApp/screens/UserPage.dart';
 import 'package:flutter/material.dart';
 import 'package:VolanteerApp/custom/BorderIcon.dart';
 import 'package:VolanteerApp/custom/OptionButton.dart';
@@ -53,7 +55,7 @@ class LandingPage extends StatelessWidget {
                           icon: Icon(Icons.perm_identity, color: COLOR_BLACK,), padding: EdgeInsets.zero, 
                           onPressed: () {
                             Navigator.push(context, MaterialPageRoute(builder: 
-                            (context) => AddPage()
+                            (context) => UserPage()
                             ));
                           },
                         ),

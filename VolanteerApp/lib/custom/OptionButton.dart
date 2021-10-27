@@ -7,7 +7,7 @@ class OptionButton extends StatelessWidget {
   final IconData icon;
   final double width;
 
-  const OptionButton({Key key, @required this.text, @required this.icon, @required this.width}) : super(key: key);
+  const OptionButton({Key key,  this.text,  this.icon, this.width}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
