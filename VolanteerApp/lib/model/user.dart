@@ -1,19 +1,19 @@
 import 'package:VolanteerApp/model/settings.dart';
+import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
 class User {
+  
   final String id;
   final String name;
-  final DateTime dateOfBirth;
-  final String imagePath;
-  final List<String> pets;
+  final String imagePath; 
   final Settings settings;
 
   const User({
     this.id = '',
     this.name = '',
-    this.dateOfBirth,
-    this.imagePath = '',
-    this.pets = const [],
+    // this.dateOfBirth,
+    this.imagePath = '',    
     this.settings = const Settings(),
   });
 
@@ -28,27 +28,24 @@ class User {
       User(
         id: id ?? this.id,
         name: name ?? this.name,
-        dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+        // dateOfBirth: dateOfBirth ?? this.dateOfBirth,
         imagePath: imagePath ?? this.imagePath,
-        pets: pets ?? this.pets,
         settings: settings ?? this.settings,
       );
 
   static User fromJson(Map<String, dynamic> json) => User(
         id: json['id'],
         name: json['name'],
-        dateOfBirth: DateTime.tryParse(json['dateOfBirth']),
+        // dateOfBirth: DateTime.tryParse(json['dateOfBirth']),
         imagePath: json['imagePath'],
-        pets: List<String>.from(json['pets']),
         settings: Settings.fromJson(json['settings']),
       );
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
-        'dateOfBirth': dateOfBirth.toIso8601String(),
+      // 'dateOfBirth': dateOfBirth.toIso8601String(),
         'imagePath': imagePath,
-        'pets': pets,
         'settings': settings.toJson(),
       };
 

@@ -27,7 +27,8 @@ class UserPreferences {
   }
 
   static Future addUsers(User user) async {
-    final idUsers = _preferences.getStringList('users') ?? <String>[];
+    _preferences = await SharedPreferences.getInstance();
+    final idUsers = _preferences.getStringList(_keyUsers) ?? <String>[];
     final newIdUsers = List.of(idUsers)..add(user.id);
 
     await _preferences.setStringList(_keyUsers, newIdUsers);

@@ -27,8 +27,10 @@ class UserPage extends StatefulWidget {
   _UserPageState createState() => _UserPageState();
 }
 
+
+
 class _UserPageState extends State<UserPage> {
-  User user;
+  User user = new User();
 
   @override
   void initState() {
@@ -48,7 +50,7 @@ class _UserPageState extends State<UserPage> {
           child: Stack(
             children: [
               buildUsers(),
-              if (widget.idUser == null)
+
                 Positioned(
                   left: 16,
                   top: 24,
@@ -57,15 +59,7 @@ class _UserPageState extends State<UserPage> {
                     child: Icon(Icons.arrow_back, size: 32),
                   ),
                 ),
-              if (widget.idUser != null)
-                Positioned(
-                  right: 16,
-                  top: 24,
-                  child: GestureDetector(
-                    onTap: () => Navigator.of(context).pop(),
-                    child: Icon(Icons.logout, size: 32),
-                  ),
-                ),
+             
             ],
           ),
         ),
@@ -80,10 +74,6 @@ class _UserPageState extends State<UserPage> {
           const SizedBox(height: 12),
           buildBirthday(),
           const SizedBox(height: 12),
-          buildPets(),
-          const SizedBox(height: 12),
-          buildAllowNotifications(),
-          buildAllowNewsletter(),
           const SizedBox(height: 32),
           buildButton(),
         ],
@@ -144,48 +134,12 @@ class _UserPageState extends State<UserPage> {
       );
 
   Widget buildBirthday() => BirthdayWidget(
-        birthday: user.dateOfBirth,
+        // birthday: user.dateOfBirth,
         onChangedBirthday: (dateOfBirth) =>
             setState(() => user = user.copy(dateOfBirth: dateOfBirth)),
       );
 
-  Widget buildPets() => buildTitle(
-        title: 'Pets',
-        child: PetsButtonsWidget(
-          pets: user.pets,
-          onSelectedPet: (pet) => setState(() {
-            final pets = user.pets.contains(pet)
-                ? (List.of(user.pets)..remove(pet))
-                : (List.of(user.pets)..add(pet));
-
-            setState(() => user = user.copy(pets: pets));
-          }),
-        ),
-      );
-
-  Widget buildAllowNotifications() => SwitchWidget(
-        title: 'Allow Notifications',
-        value: user.settings.allowNotifications,
-        onChanged: (allowNotifications) {
-          final settings = user.settings.copy(
-            allowNotifications: allowNotifications,
-          );
-
-          setState(() => user = user.copy(settings: settings));
-        },
-      );
-
-  Widget buildAllowNewsletter() => SwitchWidget(
-        title: 'Allow Newsletter',
-        value: user.settings.allowNewsletter,
-        onChanged: (allowNewsletter) {
-          final settings = user.settings.copy(
-            allowNewsletter: allowNewsletter,
-          );
-
-          setState(() => user = user.copy(settings: settings));
-        },
-      );
+ 
 
   Widget buildButton() => ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -216,23 +170,7 @@ class _UserPageState extends State<UserPage> {
       }
       );
   
-  // ButtonWidget(
-  //     text: 'Save',
-  //     onClicked: () async {
-  //       final isNewUser = widget.idUser == null;
-
-  //       if (isNewUser) {
-  //         await UserPreferences.addUsers(user);
-  //         await UserPreferences.setUser(user);
-
-  //         Navigator.of(context).pushReplacement(MaterialPageRoute(
-  //           builder: (context) => UserPage(idUser: user.id),
-  //         ));
-  //       } else {
-  //         await UserPreferences.setUser(user);
-  //       }
-  //     });
-
+  
   Widget buildTitle({
     @required String title,
     @required Widget child,
