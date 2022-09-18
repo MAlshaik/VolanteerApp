@@ -5,3 +5,5 @@ The function of this app is to organise listings for diffrent volanteer events i
 This app was developed for submission in the congressional app challenge.
 
 Fun fact: This was my first experience creating a flutter mobile app. 
+
+Contributers: MAlshaik, aa200400
